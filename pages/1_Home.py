@@ -19,11 +19,11 @@ def main():
         
         num_rows = df.shape[0] # akan bernilai 120.999
         num_cols = df.shape[1]
-        best_model_name = "Random Forest"
+        best_model_name = "Random Forest Bagging Tuning"
     except Exception as e:
         num_rows = 120999
         num_cols = 4
-        best_model_name = "Random Forest"
+        best_model_name = "Random Forest Bagging Tuning"
         st.sidebar.warning(f"Error memuat metrik awal: {e}")
 
     # Tata Letak: Kartu Ringkasan
