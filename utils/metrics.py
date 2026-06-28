@@ -3,7 +3,7 @@ from utils.loader import load_metrics_data
 
 def get_all_models_summary():
     """
-    Returns a pandas DataFrame summarizing all models evaluation metrics.
+    Mengembalikan DataFrame pandas yang merangkum metrik evaluasi semua model.
     """
     metrics = load_metrics_data()
     summary_list = []
@@ -19,21 +19,21 @@ def get_all_models_summary():
 
 def get_model_evaluation(model_name):
     """
-    Returns the classification report and confusion matrix for a specific model.
+    Mengembalikan classification report dan confusion matrix untuk model tertentu.
     """
     metrics = load_metrics_data()
     return metrics['models_evaluation'].get(model_name, None)
 
 def get_feature_importances():
     """
-    Returns the feature importances for the Random Forest model as a dict.
+    Mengembalikan nilai feature importances dari model Random Forest dalam bentuk dictionary.
     """
     metrics = load_metrics_data()
     return metrics.get('feature_importances', {})
 
 def get_classes():
     """
-    Returns the target classification classes.
+    Mengembalikan daftar kelas target klasifikasi.
     """
     metrics = load_metrics_data()
     return metrics.get('classes', ['normal', 'severely stunted', 'stunted', 'tinggi'])

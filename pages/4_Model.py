@@ -11,7 +11,7 @@ def main():
     st.markdown('<h3 style="margin-top: 5px; color: #FFFFFF; font-weight: 500;">Metrik Performa Baseline Model, Hyperparameter Tuning & Ensemble</h3>', unsafe_allow_html=True)
     st.write("---")
 
-    # Load summary of all models
+    # Muat ringkasan semua model yang sudah dilatih
     try:
         summary_df = get_all_models_summary()
         feature_imp = get_feature_importances()
@@ -20,7 +20,7 @@ def main():
         st.error(f"Gagal memuat metrik model: {e}")
         return
 
-    # Highlight the Best Model
+    # Tampilkan kartu model terbaik
     best_model_name = summary_df.iloc[0]['Model']
     best_model_f1 = summary_df.iloc[0]['F1-Score (Macro)']
     
@@ -36,14 +36,14 @@ def main():
         unsafe_allow_html=True
     )
 
-    # Tabs for breakdown
+    # Tab untuk menampilkan rincian evaluasi
     tab_summary, tab_details = st.tabs(["📋 Tabel Perbandingan Performa", "🔬 Detail Metrik per Model"])
 
     with tab_summary:
         st.markdown("### 1. Tabel Perbandingan Metrik Evaluasi")
         st.write("Skor di bawah ini dikalkulasi dengan menguji performa prediksi model terlatih menggunakan data uji terpisah (test set).")
         
-        # Add highlight styles to the dataframe
+        # Tambahkan gaya highlight pada dataframe
         styled_df = summary_df.style.format({
             'Accuracy': '{:.4f}',
             'Precision': '{:.4f}',
@@ -69,7 +69,7 @@ def main():
             unsafe_allow_html=True
         )
 
-        # Feature Importance section
+        # Bagian Feature Importance
         if feature_imp:
             st.markdown("---")
             st.markdown("### 2. Feature Importance (Pengaruh Variabel)")
@@ -107,7 +107,7 @@ def main():
         eval_data = get_model_evaluation(selected_model)
         
         if eval_data:
-            # Metrics Row
+            # Baris metrik utama
             col_m1, col_m2, col_m3, col_m4 = st.columns(4)
             with col_m1:
                 st.metric("Accuracy", f"{eval_data['accuracy']:.4%}")
@@ -148,7 +148,7 @@ def main():
                 )
                 
             with col_r2:
-                # Plotted Confusion Matrix
+                # Tampilkan Confusion Matrix sebagai grafik
                 fig_cm = plot_confusion_matrix(eval_data['confusion_matrix'], classes, title=f"Confusion Matrix: {selected_model}")
                 st.plotly_chart(fig_cm, use_container_width=True)
                 

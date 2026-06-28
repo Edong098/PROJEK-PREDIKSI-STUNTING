@@ -9,23 +9,23 @@ def main():
     st.markdown('<h3 style="margin-top: 5px; color: #FFFFFF; font-weight: 500;">Audit Data dan Preprocessing Eksploratif</h3>', unsafe_allow_html=True)
     st.write("---")
 
-    # Load dataset
+    # Muat dataset
     try:
         df_raw = load_dataset()
     except Exception as e:
         st.error(f"Gagal memuat dataset: {e}")
         return
 
-    # Process Cleaned Data Dynamically to compute metrics
+    # Proses data yang sudah dibersihkan secara dinamis untuk menghitung metrik
     df_step1 = clean_string(df_raw)
     df_step2, _, _ = fill_missing(df_step1)
     
-    # Calculate stats
+    # Hitung statistik data mentah
     raw_shape = df_raw.shape
     raw_duplicates = df_raw.duplicated().sum()
     raw_nulls = df_raw.isnull().sum().sum()
     
-    # Cleaning pipeline steps
+    # Langkah-langkah pipeline pembersihan data
     df_step3 = remove_duplicate(df_step2)
     df_step4 = filter_valid_range(df_step3)
     df_clean, bounds = remove_outlier_iqr(df_step4)
@@ -34,7 +34,7 @@ def main():
     clean_duplicates = df_clean.duplicated().sum()
     clean_nulls = df_clean.isnull().sum().sum()
     
-    # Tabs for view
+    # Tab untuk tampilan data
     view_tab, audit_tab = st.tabs(["👁️ Preview Dataset", "🔍 Audit & Preprocessing Stats"])
     
     with view_tab:
@@ -83,7 +83,7 @@ def main():
            - Batas Tinggi Badan: **{bounds.get('Tinggi Badan (cm)', (0,0))[0]:.2f}** hingga **{bounds.get('Tinggi Badan (cm)', (0,0))[1]:.2f}** cm.
         """)
 
-        # Distribution comparison
+        # Perbandingan distribusi
         st.markdown("### Ringkasan Informasi Kolom")
         info_df = pd.DataFrame({
             "Kolom": df_raw.columns,

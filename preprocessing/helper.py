@@ -1,6 +1,6 @@
 def get_stunting_interpretation(status, confidence, model_name):
     """
-    Returns automated advice and interpretation text based on the prediction status.
+    Mengembalikan teks saran dan interpretasi otomatis berdasarkan status prediksi yang dihasilkan.
     """
     status_lower = str(status).lower().strip()
     

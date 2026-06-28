@@ -2,19 +2,19 @@ import pandas as pd
 
 def validate_input(umur, gender, tinggi):
     """
-    Validates user input values for stunting prediction.
+    Memvalidasi nilai input pengguna untuk keperluan prediksi stunting.
     """
     errors = []
     
-    # Validate Age
+    # Validasi Umur
     if not (0 <= umur <= 60):
         errors.append("Umur harus berada di antara 0 dan 60 bulan.")
         
-    # Validate Gender
+    # Validasi Jenis Kelamin
     if gender.lower() not in ['laki-laki', 'perempuan']:
         errors.append("Jenis kelamin harus 'Laki-laki' atau 'Perempuan'.")
         
-    # Validate Height
+    # Validasi Tinggi Badan
     if not (40.0 <= tinggi <= 130.0):
         errors.append("Tinggi badan harus berada di antara 40 dan 130 cm.")
         
@@ -22,7 +22,8 @@ def validate_input(umur, gender, tinggi):
 
 def filter_valid_range(df):
     """
-    Filters the dataset to only include rows with logically valid values as in the notebook.
+    Menyaring dataset agar hanya menyertakan baris dengan nilai yang secara logis valid
+    sesuai dengan yang diterapkan di notebook.
     """
     valid_gender = ['laki-laki', 'perempuan']
     valid_status = ['normal', 'stunted', 'severely stunted', 'tinggi']

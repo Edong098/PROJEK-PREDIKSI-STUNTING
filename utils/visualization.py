@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 
-# Premium Color Palette matching: Green, Yellow, Red, and Blue.
+# Palet warna premium yang sesuai dengan tingkat keparahan klinis: Hijau, Kuning, Merah, dan Biru.
 COLOR_MAP = {
     'normal': '#2ECC71',
     'stunted': '#F39C12',
@@ -20,7 +20,7 @@ GENDER_MAP = {
 
 def apply_dark_theme(fig, height=350):
     """
-    Applies unified dark theme styles to any Plotly figure.
+    Menerapkan gaya tema gelap yang seragam ke semua figur Plotly.
     """
     fig.update_layout(
         plot_bgcolor='rgba(0,0,0,0)',
@@ -43,11 +43,11 @@ def apply_dark_theme(fig, height=350):
     )
     return fig
 
-# --- EDA PAGE CHARTS ---
+# --- GRAFIK HALAMAN EDA ---
 
 def plot_target_distribution(df):
     """
-    Plots the count of child status gizi (Target).
+    Menampilkan grafik batang jumlah balita per kategori status gizi (Target).
     """
     counts = df['Status Gizi'].value_counts().reset_index()
     counts.columns = ['Status Gizi', 'Jumlah']
@@ -68,7 +68,7 @@ def plot_target_distribution(df):
 
 def plot_gender_distribution(df):
     """
-    Plots the count of child gender (Jenis Kelamin).
+    Menampilkan grafik batang jumlah balita per jenis kelamin.
     """
     counts = df['Jenis Kelamin'].value_counts().reset_index()
     counts.columns = ['Jenis Kelamin', 'Jumlah']
@@ -89,7 +89,7 @@ def plot_gender_distribution(df):
 
 def plot_age_distribution(df):
     """
-    Plots the histogram of toddler ages.
+    Menampilkan histogram distribusi umur balita.
     """
     fig = px.histogram(
         df, 
@@ -104,7 +104,7 @@ def plot_age_distribution(df):
 
 def plot_height_distribution(df):
     """
-    Plots the histogram of toddler heights.
+    Menampilkan histogram distribusi tinggi badan balita.
     """
     fig = px.histogram(
         df, 
@@ -119,7 +119,7 @@ def plot_height_distribution(df):
 
 def plot_correlation_heatmap(df):
     """
-    Generates a correlation matrix heatmap of variables.
+    Menghasilkan heatmap matriks korelasi antar variabel.
     """
     df_corr = df.copy()
     if 'Jenis Kelamin' in df_corr.columns:
@@ -151,7 +151,7 @@ def plot_correlation_heatmap(df):
 
 def plot_boxplot_age(df):
     """
-    Plots boxplot of Age vs Status Gizi.
+    Menampilkan boxplot Umur vs Status Gizi.
     """
     valid_status = ['normal', 'stunted', 'severely stunted', 'tinggi']
     df_filtered = df[df['Status Gizi'].isin(valid_status)]
@@ -171,7 +171,7 @@ def plot_boxplot_age(df):
 
 def plot_boxplot_height(df):
     """
-    Plots boxplot of Height vs Status Gizi.
+    Menampilkan boxplot Tinggi Badan vs Status Gizi.
     """
     valid_status = ['normal', 'stunted', 'severely stunted', 'tinggi']
     df_filtered = df[df['Status Gizi'].isin(valid_status)]
@@ -191,7 +191,7 @@ def plot_boxplot_height(df):
 
 def plot_scatterplot(df):
     """
-    Scatterplot showing relation between age and height grouped by status gizi.
+    Scatterplot yang menampilkan hubungan antara umur dan tinggi badan yang dikelompokkan berdasarkan status gizi.
     """
     valid_status = ['normal', 'stunted', 'severely stunted', 'tinggi']
     df_filtered = df[df['Status Gizi'].isin(valid_status)]
@@ -215,11 +215,11 @@ def plot_scatterplot(df):
     return fig
 
 
-# --- MODEL PAGE CHARTS ---
+# --- GRAFIK HALAMAN MODEL ---
 
 def plot_confusion_matrix(cm, classes, title="Confusion Matrix"):
     """
-    Plots the confusion matrix.
+    Menampilkan confusion matrix dalam bentuk grafik heatmap.
     """
     cm_array = np.array(cm)
     cm_sum = cm_array.sum(axis=1)[:, np.newaxis]
@@ -256,7 +256,7 @@ def plot_confusion_matrix(cm, classes, title="Confusion Matrix"):
 
 def plot_feature_importance(importance_dict):
     """
-    Plots feature importances for Random Forest.
+    Menampilkan grafik batang horizontal untuk feature importances model Random Forest.
     """
     df_imp = pd.DataFrame(list(importance_dict.items()), columns=['Fitur', 'Importance'])
     df_imp = df_imp.sort_values(by='Importance', ascending=True)
@@ -275,17 +275,17 @@ def plot_feature_importance(importance_dict):
     return fig
 
 
-# --- PREDICTION PAGE DASHBOARD CHARTS ---
+# --- GRAFIK DASHBOARD HALAMAN PREDIKSI ---
 
 def plot_confidence_gauge(confidence_pct):
     """
-    Displays a modern circular gauge indicating prediction confidence.
+    Menampilkan gauge melingkar modern yang menunjukkan tingkat kepercayaan prediksi.
     """
-    gauge_color = "#E74C3C" # Red
+    gauge_color = "#E74C3C" # Merah
     if confidence_pct >= 80:
-        gauge_color = "#2ECC71" # Green
+        gauge_color = "#2ECC71" # Hijau
     elif confidence_pct >= 50:
-        gauge_color = "#F39C12" # Yellow/Orange
+        gauge_color = "#F39C12" # Kuning/Oranye
         
     fig = go.Figure(go.Indicator(
         mode = "gauge+number",
@@ -312,7 +312,7 @@ def plot_confidence_gauge(confidence_pct):
 
 def plot_probability_distribution(probs_dict):
     """
-    Displays the probability distribution of classes using an interactive horizontal bar chart.
+    Menampilkan distribusi probabilitas kelas menggunakan grafik batang horizontal interaktif.
     """
     df_probs = pd.DataFrame(list(probs_dict.items()), columns=['Status Gizi', 'Probabilitas (%)'])
     df_probs = df_probs.sort_values(by='Probabilitas (%)', ascending=True)
@@ -338,7 +338,7 @@ def plot_probability_distribution(probs_dict):
 
 def plot_probability_pie(probs_dict):
     """
-    Displays the probability pie chart.
+    Menampilkan grafik pie komposisi probabilitas prediksi.
     """
     df_probs = pd.DataFrame(list(probs_dict.items()), columns=['Status Gizi', 'Probabilitas (%)'])
     df_probs['Status Gizi'] = df_probs['Status Gizi'].str.title()

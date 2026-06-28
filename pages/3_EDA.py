@@ -20,7 +20,7 @@ def main():
     st.markdown('<h3 style="margin-top: 5px; color: #FFFFFF; font-weight: 500;">Visualisasi Hubungan Fitur Fisik dan Status Gizi Balita</h3>', unsafe_allow_html=True)
     st.write("---")
 
-    # Load and clean dataset for EDA
+    # Muat dan bersihkan dataset untuk keperluan EDA
     with st.spinner("Memproses visualisasi data..."):
         try:
             df_raw = load_dataset()
@@ -29,7 +29,7 @@ def main():
             st.error(f"Gagal memuat visualisasi: {e}")
             return
 
-    # Tabs for different types of analysis
+    # Tab untuk berbagai jenis analisis
     tab_dist, tab_box, tab_corr = st.tabs([
         "📊 Distribusi Frekuensi", 
         "📦 Boxplot & Hubungan", 

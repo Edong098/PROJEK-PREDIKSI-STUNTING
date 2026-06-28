@@ -11,7 +11,7 @@
 
 ## 📌 Deskripsi
 
-Sistem ini memanfaatkan pendekatan machine learning untuk membantu mengidentifikasi status gizi anak balita (Normal, Stunting, Severely Stunting, dll.) berdasarkan fitur-fitur klinis sederhana. Bertujuan untuk mendukung deteksi dini stunting sebagai permasalahan sosial riil di Indonesia.
+Sistem ini memanfaatkan pendekatan machine learning untuk membantu mengidentifikasi status gizi anak balita (Normal, Stunting, Severely Stunting, Stunting Tinggi.) berdasarkan fitur-fitur klinis sederhana. Bertujuan untuk mendukung deteksi dini stunting sebagai permasalahan sosial riil di Indonesia.
 
 ---
 
@@ -115,10 +115,11 @@ Buka browser di `http://localhost:8501`
 
 ## 📊 Dataset
 
-- **Sumber**: Data balita dari layanan kesehatan
-- **Jumlah Data**: 39.425 record balita
+- **Nama Dataset**: Stunting Toddler (Balita) Detection (121K Rows)
+- **Sumber**: [Kaggle — Rendi Putra](https://www.kaggle.com/datasets/rendiputra/stunting-balita-detection-121k-rows)
+- **Jumlah Data**: ±121.000 record balita
 - **Fitur Utama**: 3 fitur klinis + 1 target status gizi
-- **Target Kelas**: Normal, Stunting, Severely Stunting, Wasted, Obese, dll.
+- **Target Kelas**: Normal, Stunted, Severely Stunted, Tinggi
 
 ---
 

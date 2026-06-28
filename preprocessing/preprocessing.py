@@ -3,7 +3,8 @@ import numpy as np
 
 def clean_string(df):
     """
-    Cleans string categories by converting to lowercase and stripping whitespaces.
+    Membersihkan kolom kategori string dengan mengubah ke huruf kecil (lowercase)
+    dan menghapus spasi di awal/akhir nilai.
     """
     df_clean = df.copy()
     if 'Jenis Kelamin' in df_clean.columns:
@@ -14,9 +15,9 @@ def clean_string(df):
 
 def fill_missing(df, numeric_medians=None, categorical_modes=None):
     """
-    Imputes missing values.
-    Numeric features are filled with medians.
-    Categorical features are filled with mode.
+    Mengimputasi nilai yang hilang (missing values).
+    Fitur numerik diisi dengan nilai median.
+    Fitur kategorikal diisi dengan nilai modus (mode).
     """
     df_clean = df.copy()
     numeric_cols = df_clean.select_dtypes(include=['int64', 'float64']).columns
@@ -42,13 +43,14 @@ def fill_missing(df, numeric_medians=None, categorical_modes=None):
 
 def remove_duplicate(df):
     """
-    Removes duplicate rows from the dataset.
+    Menghapus baris duplikat dari dataset.
     """
     return df.drop_duplicates().reset_index(drop=True)
 
 def remove_outlier_iqr(df):
     """
-    Identifies and removes outliers based on the IQR method for Age and Height.
+    Mengidentifikasi dan menghapus outlier (pencilan) menggunakan metode IQR
+    untuk kolom Umur dan Tinggi Badan.
     """
     df_clean = df.copy()
     outlier_mask = pd.Series(False, index=df_clean.index)
@@ -70,42 +72,42 @@ def remove_outlier_iqr(df):
 
 def preprocess(df):
     """
-    Applies the full cleaning and preprocessing pipeline to the dataset.
+    Menerapkan pipeline pembersihan dan preprocessing lengkap ke seluruh dataset.
     """
-    # 1. Clean string values
+    # 1. Bersihkan nilai string
     df_clean = clean_string(df)
-    # 2. Fill missing values
+    # 2. Isi nilai yang hilang
     df_clean, _, _ = fill_missing(df_clean)
-    # 3. Remove duplicates
+    # 3. Hapus data duplikat
     df_clean = remove_duplicate(df_clean)
-    # 4. Filter by valid range
+    # 4. Filter data berdasarkan rentang nilai yang valid
     from preprocessing.validation import filter_valid_range
     df_clean = filter_valid_range(df_clean)
-    # 5. Remove outliers
+    # 5. Hapus outlier (pencilan)
     df_clean, _ = remove_outlier_iqr(df_clean)
     return df_clean
 
 def prepare_prediction_input(umur, gender, tinggi, scaler, le_gender, feature_columns):
     """
-    Encodes and scales user input features for model prediction.
+    Melakukan encoding dan scaling pada fitur input pengguna untuk keperluan prediksi model.
     """
     gender_clean = str(gender).strip().lower()
     
-    # Label encode gender
+    # Label encode kolom jenis kelamin
     gender_encoded = le_gender.transform([gender_clean])[0]
     
-    # Construct input dataframe
+    # Buat dataframe input dari nilai yang dimasukkan
     input_data = pd.DataFrame([{
         'Umur (bulan)': float(umur),
         'Jenis Kelamin': int(gender_encoded),
         'Tinggi Badan (cm)': float(tinggi)
     }])
     
-    # Reorder columns to match features expected by scaler/model
+    # Urutkan kolom agar sesuai urutan yang diharapkan oleh scaler/model
     input_data = input_data[feature_columns]
     
-    # Scale input
+    # Lakukan scaling pada input
     input_scaled = scaler.transform(input_data)
     
-    # Return as DataFrame to preserve feature names and suppress scikit-learn warnings
+    # Kembalikan sebagai DataFrame untuk mempertahankan nama fitur dan menghindari peringatan scikit-learn
     return pd.DataFrame(input_scaled, columns=feature_columns)

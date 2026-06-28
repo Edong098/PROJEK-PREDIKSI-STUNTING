@@ -13,7 +13,7 @@ def main():
     st.markdown('<h3 style="margin-top: 5px; color: #FFFFFF; font-weight: 500;">Sistem Deteksi Risiko Stunting Balita</h3>', unsafe_allow_html=True)
     st.write("---")
 
-    # Load Model Package
+    # Muat Paket Model Machine Learning
     try:
         model_package = load_model()
         model = model_package["model"]
@@ -26,7 +26,7 @@ def main():
         st.error(f"Gagal memuat file model ML: {e}")
         return
 
-    # Initialize Session States for Form Inputs
+    # Inisialisasi Session State untuk input formulir
     if "umur_input" not in st.session_state:
         st.session_state.umur_input = 24
     if "gender_input" not in st.session_state:
@@ -38,7 +38,7 @@ def main():
 
     st.markdown("### 1. Form Input Data Balita")
     
-    # Input form container
+    # Wadah formulir input
     with st.form("prediction_form"):
         col1, col2, col3 = st.columns(3)
         
@@ -73,27 +73,27 @@ def main():
             
         submit_btn = st.form_submit_button("Prediksi Status Gizi")
 
-    # If prediction is triggered
+    # Jika tombol prediksi ditekan
     if submit_btn:
-        # 1. Validate Input
+        # 1. Validasi Input Pengguna
         is_valid, errors = validate_input(umur, gender, tinggi)
         
         if not is_valid:
             for err in errors:
                 st.error(err)
         else:
-            # 2. Loading spinner
+            # 2. Tampilkan spinner loading
             with st.spinner("Menganalisis karakteristik tumbuh kembang balita..."):
                 try:
-                    # 3. Running preprocessing and encoding
+                    # 3. Jalankan preprocessing dan encoding fitur
                     gender_model_input = "laki-laki" if gender == "Laki-laki" else "perempuan"
                     X_scaled = prepare_prediction_input(umur, gender_model_input, tinggi, scaler, le_gender, feature_columns)
                     
-                    # 4. Running prediction
+                    # 4. Jalankan prediksi model
                     pred_idx = model.predict(X_scaled)[0]
                     status_gizi = le_status.inverse_transform([pred_idx])[0]
                     
-                    # 5. Extract probabilities if supported
+                    # 5. Ekstrak probabilitas jika model mendukungnya
                     probs_dict = {}
                     confidence_pct = 100.0
                     
@@ -111,7 +111,7 @@ def main():
                     prediction_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                     advice_text = get_stunting_interpretation(status_gizi, confidence_pct, model_name)
                     
-                    # 6. Store results in session state
+                    # 6. Simpan hasil prediksi ke session state
                     st.session_state.status_gizi = status_gizi
                     st.session_state.confidence_pct = confidence_pct
                     st.session_state.probs_dict = probs_dict
@@ -126,9 +126,9 @@ def main():
                 except Exception as e:
                     st.error(f"Terjadi kesalahan saat memproses prediksi: {e}")
 
-    # If prediction results are available in Session State, display them
+    # Jika hasil prediksi tersedia di Session State, tampilkan hasilnya
     if st.session_state.prediction_done:
-        # Load variables from session state
+        # Ambil variabel dari session state
         umur_val = st.session_state.umur_input
         gender_val = st.session_state.gender_input
         tinggi_val = st.session_state.tinggi_input
@@ -142,25 +142,25 @@ def main():
         st.write("---")
         st.markdown("### Hasil Analisis Gizi & Stunting")
 
-        # 2. Prediction Summary Card
-        # Determine status colors (Vibrant colors for dark theme readability)
+        # 2. Kartu Ringkasan Prediksi
+        # Tentukan warna status (warna cerah agar terbaca pada tema gelap)
         status_label = status_gizi.title()
         if "Normal" in status_label:
             bg_color = "rgba(46, 204, 113, 0.08)"
             border_color = "#2ECC71"
-            text_color = "#2ECC71" # Neon Green
+            text_color = "#2ECC71" # Hijau Neon
         elif "Severely Stunted" in status_label:
             bg_color = "rgba(231, 76, 60, 0.08)"
             border_color = "#E74C3C"
-            text_color = "#FF7675" # Light Coral Red
+            text_color = "#FF7675" # Merah Koral Terang
         elif "Stunted" in status_label:
             bg_color = "rgba(243, 156, 18, 0.08)"
             border_color = "#F39C12"
-            text_color = "#F39C12" # Bright Orange
+            text_color = "#F39C12" # Oranye Terang
         else: # Tinggi
             bg_color = "rgba(52, 152, 219, 0.08)"
             border_color = "#3498DB"
-            text_color = "#74B9FF" # Bright Blue
+            text_color = "#74B9FF" # Biru Terang
 
         st.markdown(
             f'<div class="glass-card" style="border: 2px solid {border_color}; background-color: {bg_color};">'
@@ -175,7 +175,7 @@ def main():
             unsafe_allow_html=True
         )
         
-        # 3. Confidence Gauge & 4. Probability Distribution (Columns)
+        # 3. Gauge Kepercayaan & 4. Distribusi Probabilitas (Kolom)
         col_g1, col_g2 = st.columns([1, 1])
         
         with col_g1:
@@ -188,7 +188,7 @@ def main():
             fig_dist = plot_probability_distribution(probs_dict)
             st.plotly_chart(fig_dist, use_container_width=True)
             
-        # 5. Pie Chart & 6. Feature Importance (Columns)
+        # 5. Pie Chart & 6. Feature Importance (Kolom)
         col_p1, col_p2 = st.columns([1, 1])
         
         with col_p1:
@@ -223,7 +223,7 @@ def main():
         # 8. Hasil & Rekomendasi Medis
         st.markdown("#### 8. Hasil & Rekomendasi Medis")
         
-        # Render appropriate alert component
+        # Tampilkan komponen alert yang sesuai dengan status
         if "severely stunted" in status_gizi.lower():
             st.error(advice_text)
         elif "stunted" in status_gizi.lower():
@@ -238,14 +238,14 @@ def main():
         st.markdown("#### 9. Reset Data Input")
         reset_btn = st.button("Input Data Baru (Reset)", use_container_width=True, help="Hapus hasil analisis saat ini dan reset semua form input.")
         if reset_btn:
-            # Clear all relevant session state variables
+            # Hapus semua variabel session state yang relevan
             keys_to_reset = ["umur_input", "gender_input", "tinggi_input", "prediction_done",
                              "status_gizi", "confidence_pct", "probs_dict",
                              "prediction_time", "advice_text", "gender_model_input"]
             for k in keys_to_reset:
                 if k in st.session_state:
                     del st.session_state[k]
-            # Re‑initialize defaults
+            # Inisialisasi ulang nilai default
             st.session_state.umur_input = 24
             st.session_state.gender_input = "Laki-laki"
             st.session_state.tinggi_input = 82.0

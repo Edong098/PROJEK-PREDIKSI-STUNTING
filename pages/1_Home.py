@@ -7,26 +7,26 @@ def main():
     st.markdown('<h1 style="color: #FFFFFF; font-weight: 800; text-align; font-size: 2.2rem;">PREDIKSI STATUS GIZI DAN RISIKO STUNTING BALITA MENGGUNAKAN MACHINE LEARNING</h1>', unsafe_allow_html=True)
     st.write("---")
 
-    # Render Banner Image
+    # Tampilkan Gambar Banner
     banner_path = os.path.join("assets", "banner.png")
     if os.path.exists(banner_path):
         st.image(banner_path, use_container_width=True)
 
-    # Dynamic loading of data and model details
+    # Muat data dan detail model secara dinamis
     try:
         df_raw = load_dataset()
         df = preprocess(df_raw)
         
-        num_rows = df.shape[0] # will be 120,999
+        num_rows = df.shape[0] # akan bernilai 120.999
         num_cols = df.shape[1]
         best_model_name = "Random Forest"
     except Exception as e:
         num_rows = 120999
         num_cols = 4
         best_model_name = "Random Forest"
-        st.sidebar.warning(f"Error loading initial metrics: {e}")
+        st.sidebar.warning(f"Error memuat metrik awal: {e}")
 
-    # Layout: Summary Cards
+    # Tata Letak: Kartu Ringkasan
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown(
@@ -56,7 +56,7 @@ def main():
             unsafe_allow_html=True
         )
 
-    # Home Body Tabs
+    # Tab Konten Halaman Beranda
     tab_desc, tab_goal, tab_features = st.tabs([
         "📖 Deskripsi Penelitian", 
         "🎯 Tujuan Penelitian", 

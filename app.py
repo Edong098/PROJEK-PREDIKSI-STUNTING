@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import base64
 
-# Set page config as the very first command
+# Atur konfigurasi halaman sebagai perintah pertama yang dijalankan
 st.set_page_config(
     page_title="Prediksi Stunting & Status Gizi",
     page_icon="assets/logo.png",
@@ -12,26 +12,26 @@ st.set_page_config(
 
 def inject_custom_css():
     """
-    Injects custom Google Fonts and a premium Dark-Mode theme (Slate Black, Neon Green, Light Blue)
-    with semi-transparent white-accented glassmorphism cards. Enforces pure white text colors.
+    Menyuntikkan Google Fonts dan tema Dark Mode premium (Hitam Slate, Hijau Neon, Biru Muda)
+    dengan kartu glassmorphism beraksent putih semi-transparan. Memaksa warna teks putih murni.
     """
     st.markdown("""
     <style>
-    /* Import modern typography from Google Fonts */
+    /* Impor tipografi modern dari Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
     
-    /* Apply fonts globally and enforce pure white text colors for readability */
+    /* Terapkan font secara global dan paksa warna teks putih murni untuk keterbacaan */
     html, body, [class*="css"], .stMarkdown, p, span, li, label, div, small {
         font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
-        color: #FFFFFF !important; /* Pure white text */
+        color: #FFFFFF !important; /* Teks putih murni */
     }
     
-    /* Dark theme background */
+    /* Latar belakang tema gelap */
     .stApp {
         background: radial-gradient(circle at 20% 30%, #0F1D19 0%, #0B1116 100%);
     }
     
-    /* Header titles in bright white */
+    /* Judul header berwarna putih terang */
     h1, h2, h3, h4, h5, h6 {
         font-family: 'Outfit', sans-serif;
         color: #FFFFFF !important; 
@@ -40,14 +40,14 @@ def inject_custom_css():
         margin-bottom: 0.5rem;
     }
     
-    /* Premium Glassmorphism Card (Dark background with white borders) */
+    /* Kartu Glassmorphism Premium (latar gelap dengan border putih) */
     .glass-card {
         background: rgba(255, 255, 255, 0.04);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border-radius: 16px;
         padding: 24px;
-        border: 1px solid rgba(255, 255, 255, 0.12) !important; /* Brighter white blend border */
+        border: 1px solid rgba(255, 255, 255, 0.12) !important; /* Border putih terang */
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         margin-bottom: 12px;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -68,11 +68,11 @@ def inject_custom_css():
     
     .glass-card:hover {
         transform: translateY(-2px);
-        border: 1px solid rgba(46, 204, 113, 0.4) !important; /* Stronger green glow on hover */
+        border: 1px solid rgba(46, 204, 113, 0.4) !important; /* Cahaya hijau lebih kuat saat hover */
         box-shadow: 0 12px 35px rgba(46, 204, 113, 0.08);
     }
     
-    /* Form styles overrides */
+    /* Gaya override untuk form */
     [data-testid="stForm"] {
         background: rgba(255, 255, 255, 0.03) !important;
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -80,40 +80,40 @@ def inject_custom_css():
         padding: 20px !important;
     }
     
-    /* Inputs text coloring */
+    /* Pewarnaan teks input */
     input, select, textarea, div[role="listbox"] {
         color: #FFFFFF !important;
         background-color: rgba(255, 255, 255, 0.05) !important;
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
     }
     
-    /* Metrics container override for dark mode */
+    /* Override container metrik untuk mode gelap */
     [data-testid="stMetricValue"] {
         font-size: 2.2rem;
         font-weight: 700;
-        color: #2ECC71 !important; /* Keep Neon green value */
+        color: #2ECC71 !important; /* Tetap Hijau Neon untuk nilai */
     }
     
     [data-testid="stMetricLabel"] {
         font-size: 0.95rem;
         font-weight: 600;
-        color: #FFFFFF !important; /* Pure white label */
+        color: #FFFFFF !important; /* Label putih murni */
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
     
-    /* Dark-mode Sidebar customization */
+    /* Kustomisasi Sidebar mode gelap */
     .css-1d391kg, [data-testid="stSidebar"] {
-        background-color: #08110D !important; /* Extremely dark forest green */
+        background-color: #08110D !important; /* Hijau hutan sangat gelap */
         border-right: 1px solid rgba(46, 204, 113, 0.2);
     }
     
-    /* Sidebar texts and headers */
+    /* Teks dan header di dalam Sidebar */
     [data-testid="stSidebar"] .stMarkdown, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] li {
         color: #FFFFFF !important;
     }
     
-    /* Premium custom buttons */
+    /* Tombol premium kustom */
     div.stButton > button {
         background: linear-gradient(135deg, #2ECC71 0%, #15803D 100%) !important;
         color: white !important;
@@ -131,7 +131,7 @@ def inject_custom_css():
         border: none !important;
     }
     
-    /* Tabs styling for Dark Mode */
+    /* Gaya Tab untuk Mode Gelap */
     button[data-baseweb="tab"] {
         color: #94A3B8 !important;
         font-weight: 600 !important;
@@ -142,7 +142,7 @@ def inject_custom_css():
         border-bottom-color: #2ECC71 !important;
     }
     
-    /* Table modifications */
+    /* Modifikasi tabel */
     table {
         background-color: rgba(255, 255, 255, 0.02) !important;
         color: #FFFFFF !important;
@@ -160,14 +160,14 @@ def inject_custom_css():
         border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
     }
     
-    /* Responsive styles for mobile (Bisa dibuka di HP) */
+    /* Gaya responsif untuk perangkat mobile (Bisa dibuka di HP) */
     @media (max-width: 768px) {
-        /* Stack Streamlit columns vertically on small screens */
+        /* Susun kolom Streamlit secara vertikal pada layar kecil */
         .stColumns > div {
             width: 100% !important;
             margin-bottom: 1rem !important;
         }
-        /* Reduce glass-card padding for tighter space on mobile */
+        /* Kurangi padding kartu glass untuk ruang lebih sempit di mobile */
         .glass-card {
             padding: 16px;
         }
@@ -193,12 +193,12 @@ def inject_custom_css():
         }
         
         div.stButton > button {
-            width: 100% !important; /* Full width button on mobile */
+            width: 100% !important; /* Tombol lebar penuh di mobile */
             padding: 12px 10px !important;
         }
     }
     
-    /* Compact horizontal lines (mencegah jarak terlalu jauh) */
+    /* Garis horizontal kompak (mencegah jarak terlalu jauh) */
     hr {
         margin-top: 12px !important;
         margin-bottom: 12px !important;
@@ -206,7 +206,7 @@ def inject_custom_css():
         border-top: 1px solid rgba(255, 255, 255, 0.18) !important;
     }
     
-    /* Decorative Neon Gradient Header */
+    /* Header Gradien Neon Dekoratif */
     .gradient-text {
         background: linear-gradient(135deg, #2ECC71 0%, #3498DB 100%);
         -webkit-background-clip: text;
@@ -217,10 +217,10 @@ def inject_custom_css():
     </style>
     """, unsafe_allow_html=True)
 
-# Run CSS injection globally
+# Jalankan penyuntikan CSS secara global
 inject_custom_css()
 
-# Configure Multi-page Navigation
+# Konfigurasi Navigasi Multi-halaman
 try:
     home_page = st.Page("pages/1_Home.py", title="Home", icon="🏠", default=True)
     dataset_page = st.Page("pages/2_Dataset.py", title="Dataset", icon="📊")
@@ -233,12 +233,12 @@ try:
 
     pg = st.navigation(
         [home_page, dataset_page, eda_page, model_page, prediksi_page, tentang_page],
-        position="hidden" # Hide the default Streamlit page navigation list
+        position="hidden" # Sembunyikan daftar navigasi halaman bawaan Streamlit
     )
     
-    # Custom Sidebar Layout (Ensures correct order: Header -> Links -> Footer)
+    # Tata Letak Sidebar Kustom (Memastikan urutan yang benar: Header -> Tautan -> Footer)
     with st.sidebar:
-        # 1. Sidebar Header (Always at the top)
+        # 1. Header Sidebar (Selalu di bagian atas)
         logo_path = os.path.join("assets", "logo.png")
         if os.path.exists(logo_path):
             with open(logo_path, "rb") as image_file:
@@ -254,7 +254,7 @@ try:
             st.markdown('<h3 style="color: #FFFFFF; font-weight: 700; margin-top: 10px; margin-bottom: 5px;">PREDIKSI STUNTING</h3>', unsafe_allow_html=True)
         st.write("---")
         
-        # 2. Navigation Links (In the middle)
+        # 2. Tautan Navigasi (Di bagian tengah)
         st.page_link("pages/1_Home.py", label="Home", icon="🏠")
         st.page_link("pages/2_Dataset.py", label="Dataset", icon="📊")
         st.page_link("pages/3_EDA.py", label="Exploratory Data Analysis", icon="📈")
@@ -262,14 +262,14 @@ try:
         st.page_link("pages/5_Prediksi.py", label="Prediksi Status Gizi", icon="🔮")
         st.page_link("pages/6_Tentang.py", label="Tentang Peneliti", icon="ℹ️")
         
-        # 3. Sidebar Footer (Always at the bottom)
+        # 3. Footer Sidebar (Selalu di bagian bawah)
         st.write("---")
         st.markdown('<p style="text-align: center; color: #FFFFFF; font-weight: 600; font-size: 0.75rem; margin-top: 5px; margin-bottom: 5px;">UJIAN AKHIR SEMESTER - DATA MINING LANJUT</p>', unsafe_allow_html=True)
     
     pg.run()
 
 except AttributeError:
-    # Fallback to standard Streamlit Multi-page behavior for older versions
+    # Fallback ke perilaku Multi-halaman Streamlit standar untuk versi lama
     import importlib.util
     
     with st.sidebar:

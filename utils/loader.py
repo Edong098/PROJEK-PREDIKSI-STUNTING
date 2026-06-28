@@ -7,14 +7,14 @@ import streamlit as st
 @st.cache_resource
 def load_model():
     """
-    Loads and caches the model package pickle file.
-    The package contains:
-      - 'model': The best estimator model.
-      - 'scaler': Fitted StandardScaler.
-      - 'le_gender': LabelEncoder for gender.
-      - 'le_status': LabelEncoder for status gizi.
-      - 'feature_columns': List of expected feature columns.
-      - 'model_name': Best model name (string).
+    Memuat dan melakukan cache terhadap file pickle paket model.
+    Paket ini berisi:
+      - 'model': Model estimator terbaik yang telah dilatih.
+      - 'scaler': Objek StandardScaler yang sudah di-fit.
+      - 'le_gender': LabelEncoder untuk kolom jenis kelamin.
+      - 'le_status': LabelEncoder untuk kolom status gizi.
+      - 'feature_columns': Daftar nama kolom fitur yang diharapkan.
+      - 'model_name': Nama model terbaik (string).
     """
     possible_paths = [
         os.path.join("model", "model_stunting.pkl"),
@@ -38,7 +38,7 @@ def load_model():
 @st.cache_data
 def load_dataset():
     """
-    Loads and caches the raw dataset.
+    Memuat dan melakukan cache terhadap dataset mentah.
     """
     possible_paths = [
         os.path.join("data", "data_balita.csv"),
@@ -61,7 +61,7 @@ def load_dataset():
 @st.cache_data
 def load_metrics_data():
     """
-    Loads and caches the offline model evaluation metrics from metrics_data.json.
+    Memuat dan melakukan cache terhadap data metrik evaluasi model offline dari metrics_data.json.
     """
     possible_paths = [
         os.path.join("utils", "metrics_data.json"),

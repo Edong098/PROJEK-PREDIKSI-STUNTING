@@ -6,7 +6,7 @@ def main():
     st.markdown('<h3 style="margin-top: 5px; font-weight: 500;">Anggota Kelompok Tugas Akhir UAS Data Mining Lanjut</h3>', unsafe_allow_html=True)
     st.write("---")
 
-    # Description without logo
+    # Deskripsi dan logo aplikasi
     st.markdown("""
         <div style="padding-top: 10px;">
             <h3 style="margin: 0;">Sistem Prediksi Status Gizi Anak Balita</h3>
@@ -71,7 +71,7 @@ def main():
             <p style="font-size: 0.85rem; font-weight: bold; text-transform: uppercase; margin: 3px 0 10px 0;">Deployment Streamlit</p>
             <p style="font-size: 0.9rem; line-height: 1.5;">Melakukan refactoring kode notebook ke dalam struktur file Python modular, mengintegrasikan visualisasi Plotly interaktif, membuat dashboard prediksi beserta gauge chart, menangani ekspor laporan, dan merilis sistem ke server web cloud.</p>
         </div>
-        <!-- Placeholder cards to complete 2x4 grid -->
+        <!-- Kartu placeholder untuk melengkapi grid 2x4 -->
         <div class="glass-card" style="border-left: 5px solid transparent; visibility: hidden;"></div>
         <div class="glass-card" style="border-left: 5px solid transparent; visibility: hidden;"></div>
     </div>

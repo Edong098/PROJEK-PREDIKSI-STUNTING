@@ -6,4 +6,3 @@ plotly
 imbalanced-learn
 matplotlib
 seaborn
-fpdf2
