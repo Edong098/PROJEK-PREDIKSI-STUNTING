@@ -69,7 +69,7 @@ def main():
         <div class="glass-card" style="border-left: 5px solid #1ABC9C;">
             <h4 style="margin: 0;">👤 Anggota 6 - Ahmad Jul Hadi (2301010019)</h4>
             <p style="font-size: 0.85rem; font-weight: bold; text-transform: uppercase; margin: 3px 0 10px 0;">Deployment Streamlit</p>
-            <p style="font-size: 0.9rem; line-height: 1.5;">Melakukan refactoring kode notebook ke dalam struktur file Python modular, mengintegrasikan visualisasi Plotly interaktif, membuat dashboard prediksi beserta gauge chart, menangani ekspor laporan, dan merilis sistem ke server web cloud.</p>
+            <p style="font-size: 0.9rem; line-height: 1.5;">Melakukan refactoring kode notebook ke dalam struktur file Python modular, mengintegrasikan visualisasi Plotly interaktif, membuat dashboard prediksi beserta gauge chart dan merilis sistem ke server web cloud.</p>
         </div>
         <!-- Kartu placeholder untuk melengkapi grid 2x4 -->
         <div class="glass-card" style="border-left: 5px solid transparent; visibility: hidden;"></div>
